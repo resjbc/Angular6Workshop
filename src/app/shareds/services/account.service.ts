@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IRegister } from '../../components/register/register.interface';
 import { ILogin } from '../../components/login/login.interface';
+import { IProfile } from '../../authentication/components/profile/profile.interface';
 
 
 
@@ -34,6 +35,20 @@ export class AccountService  {
         }
     ];
 
+    //แก้ไขข้อมูลส่วนตัว Update Progile
+    onUpdateProfile(accessToken: string, model: IProfile) {
+        return new Promise((resolve, reject) => {
+            const userProfile = this.mockUserItems.find(user => user.id == accessToken);
+            if (!userProfile) return reject({ Message: 'ไม่มีผู้ใช้งานนี้ในระบบ'});
+            userProfile.firstname = model.firstname;
+            userProfile.lastname = model.lastname;
+            userProfile.image = model.image;
+            userProfile.position = model.position;
+            userProfile.updated = new Date();
+            resolve(userProfile);
+        });
+    }
+
     //ดึงข้อมูลผู้ที่เข้าสู่ระบบจาก token
     getUserLogin(accessToken: string) {
         return new Promise<IAccount>((resolve, reject) => {
@@ -56,9 +71,11 @@ export class AccountService  {
 
     //ลงทะเบียน
     onRegister(model: IRegister){
-        //console.log(model||JSON)
+        //console.log(model)
         return new Promise((resolve , reject) => {
             model['id'] = Math.random();
+            model['created'] = new Date();
+            //console.log(model);
             this.mockUserItems.push(model)
             resolve(model);
             //reject({'Message' : 'Error from server!'});

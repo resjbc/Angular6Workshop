@@ -5,5 +5,11 @@ export interface IProfileComponent {
     form: FormGroup;
     onSubmit(): void;
     onConvertImage(input: HTMLInputElement): void;
+}
 
+export interface IProfile {
+    firstname: string;
+    lastname:  string;
+    position:  string;
+    image:  string;
 }

@@ -33,7 +33,11 @@ export class ProfileComponent implements IProfileComponent {
   //บันทึกข้อมูล
   onSubmit(){
     if(this.form.invalid) return this.alert.someting_wrong();
-   console.log(this.form.value);
+    this.accout
+      .onUpdateProfile(this.authen.getAuthenticated(), this.form.value)
+      .then(() => this.alert.notify('แก้ไขข้อมูลสำเร็จ', 'info'))
+      .catch(err => this.alert.notify(err.Message));
+  // console.log(this.form.value);
   }
 
   //สร้างฟอร์ม
@@ -68,12 +72,11 @@ export class ProfileComponent implements IProfileComponent {
   onConvertImage(input: HTMLInputElement) {
 
     const imageControl = this.form.controls['image'];
-    imageControl.setValue(null);
-
-    if(input.files.length == 0) return;
-
-    //ตรวจสอบชนิดไฟล์ที่อัพโหลดเข้ามา
     const imageTypes = ['image/jpeg', 'image/png'];
+
+    imageControl.setValue(null);
+    if(input.files.length == 0) return;
+    //ตรวจสอบชนิดไฟล์ที่อัพโหลดเข้ามา
     if(imageTypes.indexOf(input.files[0].type) < 0){
       input.value = null;
       return this.alert.notify('กรุณาอัพโหลดรูปภาพเท่านั้น');
