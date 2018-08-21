@@ -37,7 +37,7 @@
                         <img *ngIf="form.value.image" [src]="form.value.image" class="img-fluid img-thumbnail" alt="Image">
                     </div>
                     <div class="form-group">
-                      <input type="file">
+                      <input type="file" (change) = "onConvertImage(inputFile)" #inputFile>
                     </div>
                   </div>
                   <div class="col-sm-6">

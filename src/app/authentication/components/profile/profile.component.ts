@@ -11,6 +11,7 @@ import { AlertService } from '../../../shareds/services/alert.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements IProfileComponent {
+  
   constructor(
     private build: FormBuilder,
     private authen: AuthenService,
@@ -62,4 +63,16 @@ export class ProfileComponent implements IProfileComponent {
       .catch(err => this.alert.notify(err.Message));
   }
 
+  //แปลงไฟล์รูปเป็น Base64
+  onConvertImage(input: HTMLInputElement) {
+    const imageControl = this.form.controls['image'];
+    imageControl.setValue(null);
+    if(input.files.length == 0) return;
+    console.log(input);
+    const reader = new FileReader();
+    reader.readAsDataURL(input.files[0]);
+    reader.addEventListener('load', () => {
+      imageControl.setValue(reader.result);
+    });
+  }
 }

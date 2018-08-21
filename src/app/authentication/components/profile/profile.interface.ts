@@ -4,5 +4,6 @@ export interface IProfileComponent {
     positionItem: any[];
     form: FormGroup;
     onSubmit(): void;
+    onConvertImage(input: HTMLInputElement): void;
 
 }
