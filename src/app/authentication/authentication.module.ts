@@ -10,6 +10,7 @@ import { CardsComponent } from './components/cards/cards.component';
 import { WidgetsComponent } from './components/widgets/widgets.component';
 import { MembersComponent } from './components/members/members.component';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
+import { ChangePasswordComponent } from './components/profile/change-password/change-password.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { MemberCreateComponent } from './components/member-create/member-create.
     AuthenticationRouting,
     SharedsModule
   ],
-  declarations: [DashboardComponent, SettingComponent, ProfileComponent, BootstrapElementsComponent, CardsComponent, WidgetsComponent, MembersComponent, MemberCreateComponent]
+  declarations: [DashboardComponent, SettingComponent, ProfileComponent, BootstrapElementsComponent, CardsComponent, WidgetsComponent, MembersComponent, MemberCreateComponent, ChangePasswordComponent]
 })
 export class AuthenticationModule { }
