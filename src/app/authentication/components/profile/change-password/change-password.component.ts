@@ -23,6 +23,7 @@ export class ChangePasswordComponent implements IChangePasswordComponent {
   @Input('modalRef') modalRef: BsModalRef;
   form: FormGroup;
 
+
   //เปลี่ยนรหัสผ่าน
   onSubmit() {
 	  if(this.form.invalid)
