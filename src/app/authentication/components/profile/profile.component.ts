@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { IProfileComponent } from './profile.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthenService } from '../../../services/authen.service';
 import { AccountService } from '../../../shareds/services/account.service';
 import { AlertService } from '../../../shareds/services/alert.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,8 @@ export class ProfileComponent implements IProfileComponent {
     private build: FormBuilder,
     private authen: AuthenService,
     private accout: AccountService,
-    private alert: AlertService
+    private alert: AlertService,
+    private modalService: BsModalService
     
   ) { 
     this.initialCreateFormData(); 
@@ -24,6 +26,7 @@ export class ProfileComponent implements IProfileComponent {
   }
 
   form: FormGroup;
+  modalRef: BsModalRef; 
 
   positionItem: any[] = [
     'Frontend Developer',
@@ -38,6 +41,12 @@ export class ProfileComponent implements IProfileComponent {
       .then(() => this.alert.notify('แก้ไขข้อมูลสำเร็จ', 'info'))
       .catch(err => this.alert.notify(err.Message));
   // console.log(this.form.value);
+  }
+
+  //เปิด Modal Dialog
+  openModal(template: TemplateRef<any>) {
+    //console.log(this);
+    this.modalRef = this.modalService.show(template);
   }
 
   //สร้างฟอร์ม

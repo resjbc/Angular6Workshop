@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, ModalModule   } from 'ngx-bootstrap';
 import { AuthNavbarComponent } from './components/auth-navbar/auth-navbar.component';
 import { AuthSidebarComponent } from './components/auth-sidebar/auth-sidebar.component';
 import { AuthContentComponent } from './components/auth-content/auth-content.component';
@@ -12,7 +12,8 @@ import { AccountService } from './services/account.service';
 @NgModule({
   imports: [
     CommonModule,
-    BsDropdownModule,
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
     RouterModule,
     ReactiveFormsModule,
     FormsModule
@@ -23,7 +24,9 @@ import { AccountService } from './services/account.service';
     AuthSidebarComponent,
     AuthContentComponent,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BsDropdownModule,
+    ModalModule
   ],
   providers: [
     AlertService,
