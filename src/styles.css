@@ -3,3 +3,6 @@
 .ng-invalid.ng-touched {
     border-color: red;
 }
+[data-notify="container"] {
+    z-index: 1060 !important;
+}

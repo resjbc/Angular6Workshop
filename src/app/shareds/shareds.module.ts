@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '../../../node_modules/@angular/forms';
 import { AlertService } from './services/alert.service';
 import { AccountService } from './services/account.service';
+import { ValidatorService } from './services/validators.service';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { AccountService } from './services/account.service';
     RouterModule,
     ReactiveFormsModule,
     FormsModule
+    
   ],
   declarations: [AuthNavbarComponent, AuthSidebarComponent, AuthContentComponent],
   exports: [
@@ -30,7 +32,8 @@ import { AccountService } from './services/account.service';
   ],
   providers: [
     AlertService,
-    AccountService
+    AccountService,
+    ValidatorService
   ]
 })
 export class SharedsModule { }
