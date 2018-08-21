@@ -29,11 +29,12 @@
 
             <!--ส่วนฟอร์ม-->
             <div class="tile-body">
-              <form action="">
+              <form [formGroup]="form" (submit)="onSubmit()">
                 <div class="row">
                   <div class="col-sm-4">
                     <div class="form-group">
-                        <img src="assets/images/no_image_profile.png" class="img-fluid img-thumbnail" alt="Image">
+                        <img *ngIf="!form.value.image" src="assets/images/no_image_profile.png" class="img-fluid img-thumbnail" alt="Image">
+                        <img *ngIf="form.value.image" [src]="form.value.image" class="img-fluid img-thumbnail" alt="Image">
                     </div>
                     <div class="form-group">
                       <input type="file">
@@ -42,26 +43,26 @@
                   <div class="col-sm-6">
                       <div class="form-group">
                         <label for="">อีเมล์</label>
-                        <input type="text" name="" id="input" disabled class="form-control" value="" required="required" title="">
+                        <input type="text" name="" id="input"  formControlName = "email" class="form-control" value="" required="required" title="">
                       </div>
                       <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="">ชื่อ</label>
-                                <input type="text" name="" id="input" class="form-control" value="" required="required" title="">
+                                <input type="text" name="" id="input" class="form-control"  formControlName = "firstname" value="" required="required" title="">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="">นามสกุล</label>
-                                <input type="text" name="" id="input" class="form-control" value="" required="required" title="">
+                                <input type="text" name="" id="input" class="form-control"  formControlName = "lastname" value="" required="required" title="">
                             </div>
                         </div>
                       </div>
 
                       <div class="form-group">
                           <label for="">ตำแหน่ง</label>
-                          <select  class="form-control">
+                          <select  class="form-control"  formControlName = "position">
                               <option value="">เลือกตำแหน่งงาน</option>
                               <option *ngFor="let item of positionItem" [value] = "item">
                                 {{ item }}

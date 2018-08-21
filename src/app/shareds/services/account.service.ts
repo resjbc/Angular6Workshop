@@ -14,7 +14,7 @@ export class AccountService  {
             lastname: "dulyakul",
             email: "idres@hotmail.com",
             password: "123456",
-            position: "Fronend Developer",
+            position: "Frontend Developer",
             image: "https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg",
             created: new Date(),
             updated: new Date()

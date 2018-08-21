@@ -23,7 +23,7 @@ export class LoginComponent implements ILoginComponent {
     private authen: AuthenService
   ) { 
     this.initailCreateFromData()
-    console.log(this.authen.getAuthenticated());
+   // console.log(this.authen.getAuthenticated());
   }
 
   Url = AppURL;
