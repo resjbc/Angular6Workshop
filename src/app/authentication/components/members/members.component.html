@@ -23,22 +23,19 @@
             <div class="input-group">
               <div class="input-group-prepend" dropdown>
                 <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
-                  ค้นหาจาก <span class="caret"></span>
+                  {{ searchType.value }} <span class="caret"></span>
                 </button>
                 <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                  <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-                  <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
-                  <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
-                  <li class="divider dropdown-divider"></li>
-                  <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+                  <li *ngFor="let item of searchTypeItems" role="menuitem">
+                    <a class="dropdown-item" (click)="searchType = item">{{ item.value }}</a>
                   </li>
                 </ul>
               </div>
 
-              <input type="text" class="form-control" placeholder="ค้นหาข้อมูล">
+              <input [(ngModel)]="searchText" type="text" class="form-control" placeholder="ค้นหาข้อมูล">
 
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
+                <button (click)="onSearchItem()" class="btn btn-primary" type="button">
                   <i class="fa fa-search"></i>
                 </button>
               </div>
