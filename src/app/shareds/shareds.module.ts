@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BsDropdownModule, ModalModule   } from 'ngx-bootstrap';
+import { BsDropdownModule, ModalModule, PaginationModule   } from 'ngx-bootstrap';
 import { AuthNavbarComponent } from './components/auth-navbar/auth-navbar.component';
 import { AuthSidebarComponent } from './components/auth-sidebar/auth-sidebar.component';
 import { AuthContentComponent } from './components/auth-content/auth-content.component';
@@ -15,6 +15,7 @@ import { ValidatorService } from './services/validators.service';
     CommonModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
+    PaginationModule.forRoot(),
     RouterModule,
     ReactiveFormsModule,
     FormsModule
@@ -28,7 +29,8 @@ import { ValidatorService } from './services/validators.service';
     ReactiveFormsModule,
     FormsModule,
     BsDropdownModule,
-    ModalModule
+    ModalModule,
+    PaginationModule
   ],
   providers: [
     AlertService,
