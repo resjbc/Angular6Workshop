@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
-import { AccountService, IAccount } from "../../shareds/services/account.service";
+import { AccountService, IAccount, IRoleAccount } from "../../shareds/services/account.service";
 import { IMembersSearch } from "../components/members/members.interface";
 
 @Injectable()
 export class MemberService {
-    constructor(private account: AccountService) { }
+    constructor(private account: AccountService) {
+        this.genaratedMember();
+    }
 
     // ดึงข้อมูลสมาชิกทั้งหมด
     getMembers(option?: IMembersSearch) {
@@ -21,4 +23,25 @@ export class MemberService {
             resolve(items);
         });
     }
+
+    //จำลองข้อมูลสมาชิกเพื่อทำ pagenation
+    private genaratedMember() {
+        const position = ['Frontend Developer', 'Backend Developer'];
+        const role = [IRoleAccount.Member, IRoleAccount.Admin, IRoleAccount.Employee];
+        for (let i = 3; i <= 333; i++) {
+            this.account.mockUserItems.push({
+                id: i.toString(),
+                firstname: `Firstname ${i}`,
+                lastname: `Lastname ${i}`,
+                email: `mail-${i}@mail.com`,
+                password: `123456`,
+                position: position[Math.round(Math.random() * 1)],
+                role: role[Math.round(Math.random() * 2)],
+                created: new Date(),
+                updated: new Date()
+            });
+
+        }
+    }
+
 }
