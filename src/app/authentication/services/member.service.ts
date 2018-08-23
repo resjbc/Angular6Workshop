@@ -35,6 +35,7 @@ export class MemberService {
     private genaratedMember() {
         const position = ['Frontend Developer', 'Backend Developer'];
         const role = [IRoleAccount.Member, IRoleAccount.Admin, IRoleAccount.Employee];
+        this.account.mockUserItems.splice(2);
         for (let i = 3; i <= 333; i++) {
             this.account.mockUserItems.push({
                 id: i.toString(),

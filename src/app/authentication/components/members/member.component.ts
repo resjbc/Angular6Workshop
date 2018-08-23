@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { MemberService } from '../../services/member.service';
 import { IMembersComponent, IMembersSearchKey, IMembersSearch, IMember } from './members.interface';
 import { IAccount, IRoleAccount } from '../../../shareds/services/account.service';
@@ -16,7 +16,8 @@ export class MemberComponent implements IMembersComponent {
 
   constructor(
     private member: MemberService,
-    private alert: AlertService
+    private alert: AlertService,
+    private detect: ChangeDetectorRef
   ) {
     this.initailLoadMembers({
       startPage: this.startPage,
@@ -55,13 +56,16 @@ export class MemberComponent implements IMembersComponent {
 
   //ค้นหาข้อมูล
   onSearchItem() {
+    this.startPage = 1;
     this.initailLoadMembers({
       searchText: this.searchType.key == 'role' ? IRoleAccount[this.searchText] || '' : this.searchText,
       searchType: this.searchType.key,
       startPage: this.startPage,
       limitPage: this.limitPage
     });
-    //console.log(this.searchText,this.searchType);
+
+    //กระตุ้น Event
+    this.detect.detectChanges();
   }
 
   //แสดงชื่อสิทธิ์ผู้ใช้งาน
