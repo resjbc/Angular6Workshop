@@ -13,6 +13,11 @@ export interface IMembersComponent {
 
 }
 
+export interface IMembersSearch {
+    searchText: string;
+    searchType: string;
+}
+
 export interface IMembersSearchKey {
     key: string;
     value: string;
