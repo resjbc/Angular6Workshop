@@ -63,7 +63,7 @@ export class ProfileComponent implements IProfileComponent {
     this.form.get('email').disable();
   }
 
-  //โหลดข้อมูลใหม่พร้อมกับ Update from date
+  //โหลดข้อมูลใหม่พร้อมกับ Update FORM date
   private initialLoadUpdateFormData() {
     this.accout
       .getUserLogin(this.authen.getAuthenticated())

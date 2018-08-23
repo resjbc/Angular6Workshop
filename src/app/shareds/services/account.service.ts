@@ -2,10 +2,14 @@ import { Injectable } from '@angular/core';
 import { IRegister } from '../../components/register/register.interface';
 import { ILogin } from '../../components/login/login.interface';
 import { IProfile } from '../../authentication/components/profile/profile.interface';
+import { IChangePassword } from '../../authentication/components/profile/change-password/change-password.interface';
 
 
 
-@Injectable()
+
+@Injectable({
+    providedIn: 'root'
+})
 export class AccountService  {
 
     private mockUserItems: IAccount[] = [
@@ -34,6 +38,18 @@ export class AccountService  {
 
         }
     ];
+
+    //เปลี่ยนรหัสผ่านใหม่
+    onChangePassword(accessToken: string , model: IChangePassword) {
+        return new Promise(( resolve, reject ) => {
+            const userProfile = this.mockUserItems.find( item => item.id == accessToken);
+            if (!userProfile) return reject({ Message: 'ไม่มีผู้ใช้งานนี้ในระบบ'});
+            if (userProfile.password != model.old_pass) return reject({ Message: 'รหัสผ่านเดิมไม่ถูกต้อง'});
+        userProfile.password = model.new_pass;  
+        userProfile.updated = new Date(); 
+        resolve(userProfile);
+        });
+    }
 
     //แก้ไขข้อมูลส่วนตัว Update Progile
     onUpdateProfile(accessToken: string, model: IProfile) {

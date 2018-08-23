@@ -32,7 +32,7 @@ import { ValidatorService } from './services/validators.service';
   ],
   providers: [
     AlertService,
-    AccountService,
+    //AccountService,
     ValidatorService
   ]
 })
