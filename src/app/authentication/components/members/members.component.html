@@ -59,7 +59,7 @@
               </thead>
               <!-- Body item -->
               <tbody>
-                <tr *ngFor="let item of items">
+                <tr *ngFor="let item of items.items">
                   <td>{{ item.email }}</td>
                   <td>{{ item.firstname }}</td>
                   <td>{{ item.lastname }}</td>
@@ -76,11 +76,11 @@
               <!-- Foot item -->
               <tfoot>
                 <tr>
-                  <th colspan="7">จำนวนสมาชิกทั้งหมด {{items.length}} คน</th>
+                  <th colspan="7">จำนวนสมาชิกทั้งหมด {{items.totalItems}} คน</th>
                 </tr>
               </tfoot>
             </table>
-            <pagination nextText="หน้าถัดไป" previousText="หน้าก่อนหน้า" [totalItems]="items.length"></pagination>
+            <pagination [(ngModel)]="startPage" [itemsPerPage] = "limitPage" (pageChanged)="onPageChanged($event)" [rotate]="false" [maxSize]="10" nextText="หน้าถัดไป" previousText="หน้าก่อนหน้า" [totalItems]="items.totalItems"></pagination>
           </div>
         </div>
       </div>

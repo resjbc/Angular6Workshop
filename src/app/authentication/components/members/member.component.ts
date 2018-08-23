@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { MemberService } from '../../services/member.service';
-import { IMembersComponent, IMembersSearchKey, IMembersSearch } from './members.interface';
+import { IMembersComponent, IMembersSearchKey, IMembersSearch, IMember } from './members.interface';
 import { IAccount, IRoleAccount } from '../../../shareds/services/account.service';
 import { AlertService } from '../../../shareds/services/alert.service';
+import { PageChangedEvent } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-members',
@@ -17,12 +18,15 @@ export class MemberComponent implements IMembersComponent {
     private member: MemberService,
     private alert: AlertService
   ) {
-    this.initailLoadMembers();
+    this.initailLoadMembers({
+      startPage: this.startPage,
+      limitPage: this.limitPage
+    });
     //กำหนดค่าเริ่มต้น searchType
     this.searchType = this.searchTypeItems[0];
   }
 
-  items: IAccount[] = [];
+  items: IMember ;
 
   //ตัวแปรสำหรับค้นหา
   searchText: string = "";
@@ -35,11 +39,27 @@ export class MemberComponent implements IMembersComponent {
     { key: 'role', value: 'ค้นหาจากจากสิทธิ์ผู้ใช้' },
   ];
 
+  //ส่วนของ pagination
+  startPage: number = 1;
+  limitPage: number = 5;
+
+  //เปลี่ยนหน้า pagination
+  onPageChanged(page: PageChangedEvent){
+    this.initailLoadMembers({
+      searchText: this.searchType.key == 'role' ? IRoleAccount[this.searchText] || '' : this.searchText,
+      searchType: this.searchType.key,
+      startPage: page.page,
+      limitPage: page.itemsPerPage
+    });
+  }
+
   //ค้นหาข้อมูล
   onSearchItem() {
     this.initailLoadMembers({
       searchText: this.searchType.key == 'role' ? IRoleAccount[this.searchText] || '' : this.searchText,
-      searchType: this.searchType.key
+      searchType: this.searchType.key,
+      startPage: this.startPage,
+      limitPage: this.limitPage
     });
     //console.log(this.searchText,this.searchType);
   }

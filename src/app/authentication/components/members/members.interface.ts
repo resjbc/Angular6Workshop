@@ -1,9 +1,8 @@
 import { IAccount, IRoleAccount } from "../../../shareds/services/account.service";
+import { PageChangedEvent } from "ngx-bootstrap";
 
 export interface IMembersComponent {
-    items: IAccount[];
-
-    getRoleName(role: IRoleAccount): string;
+    items: IMember;
 
     //ส่วนของการค้นหา
     searchText: string;
@@ -11,11 +10,25 @@ export interface IMembersComponent {
     searchTypeItems: IMembersSearchKey[];
     onSearchItem(): void;
 
+    //ส่วนของ pagination
+    startPage: number;
+    limitPage: number;
+    onPageChanged(page: PageChangedEvent): void ;
+    
+    getRoleName(role: IRoleAccount): string;
+}
+
+export interface IMember {
+    items: IAccount[];
+    totalItems: number;
 }
 
 export interface IMembersSearch {
-    searchText: string;
-    searchType: string;
+    searchText?: string;
+    searchType?: string;
+
+    startPage: number;
+    limitPage: number;
 }
 
 export interface IMembersSearchKey {

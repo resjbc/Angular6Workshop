@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AccountService, IAccount, IRoleAccount } from "../../shareds/services/account.service";
-import { IMembersSearch } from "../components/members/members.interface";
+import { IMembersSearch, IMember } from "../components/members/members.interface";
 
 @Injectable()
 export class MemberService {
@@ -10,17 +10,24 @@ export class MemberService {
 
     // ดึงข้อมูลสมาชิกทั้งหมด
     getMembers(option?: IMembersSearch) {
-        return new Promise<IAccount[]>((resolve, reject) => {
+        return new Promise<IMember>((resolve, reject) => {
             let items = this.account.mockUserItems;
+            const startItem = (option.startPage - 1) * option.limitPage;
+            const endItem = option.startPage * option.limitPage;
+
             //หากมีการค้นหาข้อมูล
-            if (option) {
+            if (option && option.searchText && option.searchType) {
                 //ค้นหาข้มูลมาเก็บตัวแปร item
                 items = this.account
                     .mockUserItems
                     .filter(item => item[option.searchType].toString().toLowerCase()
                         .indexOf(option.searchText.toString().toLowerCase()) >= 0);
             }
-            resolve(items);
+            resolve({
+                items: items.slice(
+                    startItem,endItem
+                ), totalItems: items.length
+            });
         });
     }
 
