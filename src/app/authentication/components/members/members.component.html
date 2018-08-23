@@ -48,24 +48,42 @@
         <div class="tile-body">
           <div class="table-responsive">
             <table class="table">
+              <!-- Head item -->
               <thead>
                 <tr>
+                  <th>อีเมล์</th>
                   <th>ชื่อ</th>
                   <th>นามสกุล</th>
                   <th>ตำแหน่ง</th>
-                  <th>อีเมล์</th>
-                  <th>สิทธิการใช้งาน</th>
+                  <th>สิทธิ์ผู้ใช้</th>
                   <th>วันที่</th>
                   <th></th>
                 </tr>
               </thead>
+              <!-- Body item -->
+              <tbody>
+                <tr *ngFor="let item of items">
+                  <td>{{ item.email }}</td>
+                  <td>{{ item.firstname }}</td>
+                  <td>{{ item.lastname }}</td>
+                  <td>{{ item.position }}</td>
+                  <td>{{ getRoleName(item.role) }}</td>
+                  <td>{{ item.updated | date : 'dd-MM-yyyy' }}</td>
+                  <td class="text-right">
+                    <i class="fa fa-edit"></i>
+                     <span> | </span>
+                    <i class="fa fa-trash"></i>
+                  </td>
+                </tr>
+              </tbody>
+              <!-- Foot item -->
               <tfoot>
                 <tr>
-                  <th colspan="7">จำนวนสมาชิกทั้งหมด 0 คน</th>
+                  <th colspan="7">จำนวนสมาชิกทั้งหมด {{items.length}} คน</th>
                 </tr>
               </tfoot>
             </table>
-            <pagination nextText="หน้าถัดไป" previousText="หน้าก่อนหน้า" [totalItems]="30"></pagination>
+            <pagination nextText="หน้าถัดไป" previousText="หน้าก่อนหน้า" [totalItems]="items.length"></pagination>
           </div>
         </div>
       </div>

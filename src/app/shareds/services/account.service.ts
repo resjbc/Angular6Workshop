@@ -12,7 +12,7 @@ import { IChangePassword } from '../../authentication/components/profile/change-
 })
 export class AccountService  {
 
-    private mockUserItems: IAccount[] = [
+    public mockUserItems: IAccount[] = [
         {
             id: 1,
             firstname: "idres",
@@ -21,6 +21,7 @@ export class AccountService  {
             password: "123456",
             position: "Frontend Developer",
             image: "https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg",
+            role: IRoleAccount.Employee, 
             created: new Date(),
             updated: new Date()
 
@@ -33,6 +34,7 @@ export class AccountService  {
             password: "123456",
             position: "Backend Developer",
             //image: "https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg",
+            role: IRoleAccount.Admin, 
             created: new Date(),
             updated: new Date()
 
@@ -108,7 +110,16 @@ export interface IAccount {
     id?: any;
     position?: string;
     image?: string;
+    role?
     created?: Date,
     updated?: Date
 }
+
+export enum IRoleAccount{
+    Member,
+    Employee,
+    Admin
+}
+
+
 

@@ -8,7 +8,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { BootstrapElementsComponent } from './components/bootstrap-elements/bootstrap-elements.component';
 import { CardsComponent } from './components/cards/cards.component';
 import { WidgetsComponent } from './components/widgets/widgets.component';
-import { MembersComponent } from './components/members/members.component';
+import { MemberComponent } from './components/members/member.component';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { ChangePasswordComponent } from './components/profile/change-password/change-password.component';
 
@@ -18,6 +18,6 @@ import { ChangePasswordComponent } from './components/profile/change-password/ch
     AuthenticationRouting,
     SharedsModule
   ],
-  declarations: [DashboardComponent, SettingComponent, ProfileComponent, BootstrapElementsComponent, CardsComponent, WidgetsComponent, MembersComponent, MemberCreateComponent, ChangePasswordComponent]
+  declarations: [DashboardComponent, SettingComponent, ProfileComponent, BootstrapElementsComponent, CardsComponent, WidgetsComponent, MemberComponent, MemberCreateComponent, ChangePasswordComponent]
 })
 export class AuthenticationModule { }

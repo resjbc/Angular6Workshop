@@ -6,7 +6,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { BootstrapElementsComponent } from './components/bootstrap-elements/bootstrap-elements.component';
 import { CardsComponent } from './components/cards/cards.component';
 import { WidgetsComponent } from './components/widgets/widgets.component';
-import { MembersComponent } from './components/members/members.component';
+import { MemberComponent } from './components/members/member.component';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 
 
@@ -18,7 +18,7 @@ const RouteLists: Routes = [
     { path: AuthURL.Element, component: BootstrapElementsComponent },
     { path: AuthURL.Card, component: CardsComponent },
     { path: AuthURL.Widget, component: WidgetsComponent },
-    { path: AuthURL.Member, component: MembersComponent },
+    { path: AuthURL.Member, component: MemberComponent },
     { path: AuthURL.MemberCreate, component: MemberCreateComponent },
 ];
 
