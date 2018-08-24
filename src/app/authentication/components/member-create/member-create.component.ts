@@ -5,11 +5,16 @@ import { SharedsService } from '../../../shareds/services/shareds.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertService } from '../../../shareds/services/alert.service';
 import { ValidatorService } from '../../../shareds/services/validators.service';
+import { MemberService } from '../../services/member.service';
+import { Router } from '@angular/router';
+import { AppURL } from '../../../app.url';
+import { AuthURL } from '../../authentication.url';
 
 @Component({
   selector: 'app-member-create',
   templateUrl: './member-create.component.html',
-  styleUrls: ['./member-create.component.css']
+  styleUrls: ['./member-create.component.css'],
+  providers: [MemberService]
 })
 export class MemberCreateComponent implements IMemberCoponent {
 
@@ -17,7 +22,9 @@ export class MemberCreateComponent implements IMemberCoponent {
     private shareds: SharedsService,
     private builder: FormBuilder,
     private alert: AlertService,
-    private validator: ValidatorService
+    private validator: ValidatorService,
+    private member: MemberService,
+    private router: Router
   ) {
     this.positionItem = shareds.positionItem;
     this.initailFormData();
@@ -55,7 +62,15 @@ export class MemberCreateComponent implements IMemberCoponent {
   onSubmit() {
     if(this.form.invalid)
     return this.alert.someting_wrong();
-    console.log(this.form.value);
+
+    this.member
+        .createMember(this.form.value)
+        .then(res => {
+          this.alert.notify('บันทึกข้อมูลสำเร็จ', 'info');
+          this.router.navigate(['/',AppURL.Authen, AuthURL.Member]);
+        })
+        .catch(err => this.alert.notify(err.Message));
+    //console.log(this.form.value);
   }
 
   //แสดงตัวอย่างภาพอัพโหลด

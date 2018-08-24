@@ -5,13 +5,19 @@ import { IMembersSearch, IMember } from "../components/members/members.interface
 @Injectable()
 export class MemberService {
     constructor(private account: AccountService) {
-        this.genaratedMember();
+        if (account.mockUserItems.length <= 2)
+            this.genaratedMember();
     }
 
     // ดึงข้อมูลสมาชิกทั้งหมด
     getMembers(option?: IMembersSearch) {
         return new Promise<IMember>((resolve, reject) => {
-            let items = this.account.mockUserItems;
+            //เรียงลำดับข้อมูลจากวันแก้ไขล่าสุด
+            let items = this.account.mockUserItems.sort((a1, a2) => {
+                return Date.parse(a2.updated.toString()) - Date.parse(a1.updated.toString())
+            });
+
+            //คำนวณเรื่อง pagination
             const startItem = (option.startPage - 1) * option.limitPage;
             const endItem = option.startPage * option.limitPage;
 
@@ -25,7 +31,7 @@ export class MemberService {
             }
             resolve({
                 items: items.slice(
-                    startItem,endItem
+                    startItem, endItem
                 ), totalItems: items.length
             });
         });
@@ -35,8 +41,8 @@ export class MemberService {
     private genaratedMember() {
         const position = ['Frontend Developer', 'Backend Developer'];
         const role = [IRoleAccount.Member, IRoleAccount.Admin, IRoleAccount.Employee];
-        this.account.mockUserItems.splice(2);
-        for (let i = 3; i <= 333; i++) {
+        //this.account.mockUserItems.splice(2);
+        for (let i = 3; i <= 100; i++) {
             this.account.mockUserItems.push({
                 id: i.toString(),
                 firstname: `Firstname ${i}`,
@@ -50,6 +56,19 @@ export class MemberService {
             });
 
         }
+    }
+
+    //เพิ่มข้อมูลสมาชิก
+    createMember(model: IAccount) {
+        return new Promise((resolve, reject) => {
+            if (this.account.mockUserItems.find(item => item.email == model.email))
+                return reject({ Message: 'อีเมล์นี้มีในระบบแล้ว' })
+            model.id = Math.random();
+            model.created = new Date();
+            model.updated = new Date();
+            this.account.mockUserItems.push(model);
+            resolve(model);
+        });
     }
 
 }
