@@ -5,6 +5,7 @@ import { AuthenService } from '../../../services/authen.service';
 import { AccountService } from '../../../shareds/services/account.service';
 import { AlertService } from '../../../shareds/services/alert.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { SharedsService } from '../../../shareds/services/shareds.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,20 +19,19 @@ export class ProfileComponent implements IProfileComponent {
     private authen: AuthenService,
     private accout: AccountService,
     private alert: AlertService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private shareds: SharedsService
     
   ) { 
     this.initialCreateFormData(); 
     this.initialLoadUpdateFormData();
+    this.positionItem = this.shareds.positionItem;
   }
 
   form: FormGroup;
   modalRef: BsModalRef; 
 
-  positionItem: any[] = [
-    'Frontend Developer',
-    'Backend Developer'
-  ];
+  positionItem: any[] = [];
 
   //บันทึกข้อมูล
   onSubmit(){

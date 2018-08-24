@@ -9,6 +9,7 @@ import { ReactiveFormsModule, FormsModule } from '../../../node_modules/@angular
 import { AlertService } from './services/alert.service';
 import { AccountService } from './services/account.service';
 import { ValidatorService } from './services/validators.service';
+import { SharedsService } from './services/shareds.service';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { ValidatorService } from './services/validators.service';
   providers: [
     AlertService,
     //AccountService,
+    SharedsService,
     ValidatorService
   ]
 })
