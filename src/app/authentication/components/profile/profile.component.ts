@@ -47,11 +47,13 @@ export class ProfileComponent implements IProfileComponent {
   //แปลงไฟล์รูปเป็น Base64
   onConvertImage(input: HTMLInputElement) {
     const imageControl = this.form.controls['image'];
+    
     this.shareds
         .onConvertImage(input)
         .then(base64 => imageControl.setValue(base64))
         .catch(err => {
           input.value = null;
+          imageControl.setValue(null);
           this.alert.notify(err.Message);
         });
   }
