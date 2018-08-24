@@ -28,7 +28,8 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <img src="assets/images/no_image_profile.png" class="img-fluid img-thumbnail" alt="Image">
+                  <img *ngIf="!form.value.image" src="assets/images/no_image_profile.png" class="img-fluid img-thumbnail" alt="Image">
+                  <img *ngIf="form.value.image" [src]="form.value.image" class="img-fluid img-thumbnail" alt="Image">
 
                 </div>
                 <div class="form-group">
@@ -89,7 +90,7 @@
             <hr>
             <div class="form-group">
               <button class="btn btn-primary icon-btn" type="submit">
-                <i class="fa fa-save"></i> บันทึกข้อมูลโปรไฟล์
+                <i class="fa fa-save"></i> บันทึกข้อมูลสมาชิก
               </button>
             </div>
           </form>

@@ -9,4 +9,5 @@ export interface IMemberCoponent {
 
     getRoleName(role: IRoleAccount): string;
     onSubmit(): void; 
+    onConvertImage(input: HTMLInputElement);
 }
