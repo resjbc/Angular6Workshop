@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertService } from '../../../shareds/services/alert.service';
 import { ValidatorService } from '../../../shareds/services/validators.service';
 import { MemberService } from '../../services/member.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppURL } from '../../../app.url';
 import { AuthURL } from '../../authentication.url';
 
@@ -24,10 +24,22 @@ export class MemberCreateComponent implements IMemberCoponent {
     private alert: AlertService,
     private validator: ValidatorService,
     private member: MemberService,
-    private router: Router
+    private router: Router,
+    private activatedRouter: ActivatedRoute
   ) {
-    this.positionItem = shareds.positionItem;
+    /*this.activatedRouter.queryParams.forEach(queryParam => { 
+      console.log(queryParam)
+    });*/
+    
+    //console.log(this.activatedRouter.snapshot.queryParams);
+
+    this.activatedRouter.params.forEach(Param => { 
+      console.log(Param)
+    });
+  
     this.initailFormData();
+    //เพิ่ม position
+    this.positionItem = shareds.positionItem;
   }
 
   form: FormGroup;

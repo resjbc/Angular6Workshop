@@ -4,6 +4,9 @@ import { IMembersComponent, IMembersSearchKey, IMembersSearch, IMember } from '.
 import { IAccount, IRoleAccount } from '../../../shareds/services/account.service';
 import { AlertService } from '../../../shareds/services/alert.service';
 import { PageChangedEvent } from 'ngx-bootstrap';
+import { Router } from '@angular/router';
+import { AppURL } from '../../../app.url';
+import { AuthURL } from '../../authentication.url';
 
 @Component({
   selector: 'app-members',
@@ -17,7 +20,8 @@ export class MemberComponent implements IMembersComponent {
   constructor(
     private member: MemberService,
     private alert: AlertService,
-    private detect: ChangeDetectorRef
+    private detect: ChangeDetectorRef,
+    private router: Router
   ) {
     this.initailLoadMembers({
       startPage: this.startPage,
@@ -106,8 +110,18 @@ export class MemberComponent implements IMembersComponent {
       });
   }
 
+  // แก้ไขข้อมูลสมาชิก
+  onUpdateMember(item: IAccount) {
+    this.router.navigate(['',
+      AppURL.Authen, AuthURL.MemberCreate,
+      //{ id: item.id }
+      item.id
+    ]);//, {queryParams: {id: item.id}});
+
+  }
+
   //ตรวจสอบและรีเทินค่าค้นหา
-  private get getsearchText(){
-    return  this.searchType.key == 'role' ? IRoleAccount[this.searchText] || '' : this.searchText;
+  private get getsearchText() {
+    return this.searchType.key == 'role' ? IRoleAccount[this.searchText] || '' : this.searchText;
   }
 }

@@ -1,4 +1,4 @@
-import { Routes, RouterModule} from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { AuthURL } from './authentication.url';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SettingComponent } from './components/setting/setting.component';
@@ -19,7 +19,13 @@ const RouteLists: Routes = [
     { path: AuthURL.Card, component: CardsComponent },
     { path: AuthURL.Widget, component: WidgetsComponent },
     { path: AuthURL.Member, component: MemberComponent },
-    { path: AuthURL.MemberCreate, component: MemberCreateComponent },
+    {
+        path: AuthURL.MemberCreate, children: [
+            { path: '', component: MemberCreateComponent },
+            { path: ':id', component: MemberCreateComponent }
+        ]
+    },
+    //{ path: AuthURL.MemberCreate + '/:id', component: MemberCreateComponent }
 ];
 
 export const AuthenticationRouting = RouterModule.forChild(RouteLists);
