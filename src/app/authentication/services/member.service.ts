@@ -71,4 +71,13 @@ export class MemberService {
         });
     }
 
+    //ลบข้อมูลสมาชิก
+    deleteMember(id: any) {
+        return new Promise((reslove, reject) => {
+            const findIndex = this.account.mockUserItems.findIndex(item => item.id == id);
+            if (findIndex < 0) return reject({ Message: 'ไม่มีข้อมูลนี้ในระบบ' });
+            reslove(this.account.mockUserItems.splice(findIndex, 1));
+        });
+    }
+
 }

@@ -58,7 +58,7 @@ export class MemberComponent implements IMembersComponent {
   onSearchItem() {
     this.startPage = 1;
     this.initailLoadMembers({
-      searchText: this.searchType.key == 'role' ? IRoleAccount[this.searchText] || '' : this.searchText,
+      searchText: this.searchText,
       searchType: this.searchType.key,
       startPage: this.startPage,
       limitPage: this.limitPage
@@ -86,10 +86,28 @@ export class MemberComponent implements IMembersComponent {
   //ลบข้อมูลสมาชิก
   onDeleteMember(item: IAccount) {
     this.alert
-        .confirm()
-        .then(status => {
-          if(status) console.log(item);
-          else return;
-        });
+      .confirm()
+      .then(status => {
+        if (status)
+          this.member
+            .deleteMember(item.id)
+            .then(() => {
+              //โหลด Member ใหม่
+              this.initailLoadMembers({
+                searchText: this.getsearchText,
+                searchType: this.searchType.key,
+                startPage: this.startPage,
+                limitPage: this.limitPage
+              });
+              this.alert.notify('ลบข้อมูลสำเร็จ', 'info')
+            })
+            .catch(err => this.alert.notify(err.Message));
+        else return;
+      });
+  }
+
+  //ตรวจสอบและรีเทินค่าค้นหา
+  private get getsearchText(){
+    return  this.searchType.key == 'role' ? IRoleAccount[this.searchText] || '' : this.searchText;
   }
 }
