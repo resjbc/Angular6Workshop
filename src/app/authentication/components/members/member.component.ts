@@ -27,7 +27,7 @@ export class MemberComponent implements IMembersComponent {
     this.searchType = this.searchTypeItems[0];
   }
 
-  items: IMember ;
+  items: IMember;
 
   //ตัวแปรสำหรับค้นหา
   searchText: string = "";
@@ -45,7 +45,7 @@ export class MemberComponent implements IMembersComponent {
   limitPage: number = 5;
 
   //เปลี่ยนหน้า pagination
-  onPageChanged(page: PageChangedEvent){
+  onPageChanged(page: PageChangedEvent) {
     this.initailLoadMembers({
       searchText: this.searchType.key == 'role' ? IRoleAccount[this.searchText] || '' : this.searchText,
       searchType: this.searchType.key,
@@ -81,5 +81,15 @@ export class MemberComponent implements IMembersComponent {
         this.items = items;
       })
       .catch(err => this.alert.notify(err.Message));
+  }
+
+  //ลบข้อมูลสมาชิก
+  onDeleteMember(item: IAccount) {
+    this.alert
+        .confirm()
+        .then(status => {
+          if(status) console.log(item);
+          else return;
+        });
   }
 }
