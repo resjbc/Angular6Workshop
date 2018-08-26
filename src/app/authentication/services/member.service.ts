@@ -37,6 +37,18 @@ export class MemberService {
         });
     }
 
+    // ดึงข้อมูลสมาชิกแค่คนเดียว
+    getMemberById(id) {
+        return new Promise<IAccount>((resolve, reject) => {
+            //เรียงลำดับข้อมูลจากวันแก้ไขล่าสุด
+               const  member = this.account
+                    .mockUserItems
+                    .find(item => item.id == id);
+                    if (!member) return reject({Message : 'ไม่มีข้อมูลสมาชิกในระบบ'});
+                    resolve(member);
+            });
+    }
+
     //จำลองข้อมูลสมาชิกเพื่อทำ pagenation
     private genaratedMember() {
         const position = ['Frontend Developer', 'Backend Developer'];

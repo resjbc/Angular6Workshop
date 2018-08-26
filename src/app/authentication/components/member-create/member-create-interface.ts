@@ -4,6 +4,7 @@ import { FormGroup } from "@angular/forms";
 export interface IMemberCoponent {
     positionItem: string[];
     roleItem: IRoleAccount[];
+    memId: any;
 
     form: FormGroup;
 
