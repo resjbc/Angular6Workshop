@@ -112,7 +112,7 @@ export class MemberCreateComponent implements IMemberCoponent {
         //นำข้อมูลมาใส่ฟอร์ม
        const form = this.form;
        form.controls['email'].setValue(member.email);
-       //form.controls['password'].setValue(member.password);
+       form.controls['password'].setValidators(this.validator.isPassword);
        form.controls['firstname'].setValue(member.firstname);
        form.controls['lastname'].setValue(member.lastname);
        form.controls['position'].setValue(member.position);
