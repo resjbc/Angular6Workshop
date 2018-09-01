@@ -1,12 +1,17 @@
 <app-auth-content>
   <div class="app-title">
     <div>
-      <h1><i class="fa fa-users"></i> รายการสมาชิก</h1>
+      <h1>
+        <i class="fa fa-users"></i> รายการสมาชิก</h1>
       <p>หน้าแสดง รายการสมาชิก ค้นหาและแก้ไข</p>
     </div>
     <ul class="app-breadcrumb breadcrumb">
-      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-      <li class="breadcrumb-item"><a href="#">รายการสมาชิก</a></li>
+      <li class="breadcrumb-item">
+        <i class="fa fa-home fa-lg"></i>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="#">รายการสมาชิก</a>
+      </li>
     </ul>
   </div>
   <div class="row">
@@ -23,7 +28,8 @@
             <div class="input-group">
               <div class="input-group-prepend" dropdown>
                 <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
-                  {{ searchType.value }} <span class="caret"></span>
+                  {{ searchType.value }}
+                  <span class="caret"></span>
                 </button>
                 <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
                   <li *ngFor="let item of searchTypeItems" role="menuitem">
@@ -32,7 +38,10 @@
                 </ul>
               </div>
 
-              <input [(ngModel)]="searchText" type="text" class="form-control" placeholder="ค้นหาข้อมูล">
+              <div [ngSwitch]="searchType.key">
+                <input *ngSwitchCase="'updated'" bsDaterangepicker placement="left" [(ngModel)]="searchText" type="text" class="form-control" placeholder="ค้นหาข้อมูล">
+                <input *ngSwitchDefault [(ngModel)]="searchText" type="text" class="form-control" placeholder="ค้นหาข้อมูล">
+              </div>
 
               <div class="input-group-append">
                 <button (click)="onSearchItem()" class="btn btn-primary" type="button">
@@ -67,8 +76,8 @@
                   <td>{{ getRoleName(item.role) }}</td>
                   <td>{{ item.updated | date : 'dd-MM-yyyy' }}</td>
                   <td class="text-right">
-                    <i (click) = "onUpdateMember(item)" class="fa fa-edit cur"></i>
-                     <span> | </span>
+                    <i (click)="onUpdateMember(item)" class="fa fa-edit cur"></i>
+                    <span> | </span>
                     <i (click)="onDeleteMember(item)" class="fa fa-trash cur"></i>
                   </td>
                 </tr>
@@ -80,7 +89,8 @@
                 </tr>
               </tfoot>
             </table>
-            <pagination [(ngModel)]="startPage" [itemsPerPage] = "limitPage" (pageChanged)="onPageChanged($event)" [rotate]="false" [maxSize]="10" nextText="หน้าถัดไป" previousText="หน้าก่อนหน้า" [totalItems]="items.totalItems"></pagination>
+            <pagination [(ngModel)]="startPage" [itemsPerPage]="limitPage" (pageChanged)="onPageChanged($event)" [rotate]="false" [maxSize]="10"
+              nextText="หน้าถัดไป" previousText="หน้าก่อนหน้า" [totalItems]="items.totalItems"></pagination>
           </div>
         </div>
       </div>

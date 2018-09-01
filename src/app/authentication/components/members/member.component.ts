@@ -41,7 +41,8 @@ export class MemberComponent implements IMembersComponent {
     { key: 'firstname', value: 'ค้นหาจากชื่อ' },
     { key: 'lastname', value: 'ค้นหาจากนามสกุล' },
     { key: 'position', value: 'ค้นหาจากตำแหน่ง' },
-    { key: 'role', value: 'ค้นหาจากจากสิทธิ์ผู้ใช้' },
+    { key: 'role', value: 'ค้นหาจากสิทธิ์ผู้ใช้' },
+    { key: 'updated', value: 'ค้นหาจากวันที่' },
   ];
 
   //ส่วนของ pagination
@@ -51,7 +52,7 @@ export class MemberComponent implements IMembersComponent {
   //เปลี่ยนหน้า pagination
   onPageChanged(page: PageChangedEvent) {
     this.initailLoadMembers({
-      searchText: this.searchType.key == 'role' ? IRoleAccount[this.searchText] || '' : this.searchText,
+      searchText: this.getsearchText,
       searchType: this.searchType.key,
       startPage: page.page,
       limitPage: page.itemsPerPage

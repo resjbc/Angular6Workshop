@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BsDropdownModule, ModalModule, PaginationModule   } from 'ngx-bootstrap';
+import { BsDropdownModule, ModalModule, PaginationModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { AuthNavbarComponent } from './components/auth-navbar/auth-navbar.component';
 import { AuthSidebarComponent } from './components/auth-sidebar/auth-sidebar.component';
 import { AuthContentComponent } from './components/auth-content/auth-content.component';
@@ -17,10 +17,11 @@ import { SharedsService } from './services/shareds.service';
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     PaginationModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     RouterModule,
     ReactiveFormsModule,
     FormsModule
-    
+
   ],
   declarations: [AuthNavbarComponent, AuthSidebarComponent, AuthContentComponent],
   exports: [
@@ -31,7 +32,8 @@ import { SharedsService } from './services/shareds.service';
     FormsModule,
     BsDropdownModule,
     ModalModule,
-    PaginationModule
+    PaginationModule,
+    BsDatepickerModule
   ],
   providers: [
     AlertService,
