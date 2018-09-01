@@ -11,6 +11,12 @@ import { AccountService } from './services/account.service';
 import { ValidatorService } from './services/validators.service';
 import { SharedsService } from './services/shareds.service';
 
+// เพิ่มภาษาไทยให้กับ Datepicker
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { thLocale } from 'ngx-bootstrap/locale';
+defineLocale('th', thLocale); 
+
+
 @NgModule({
   imports: [
     CommonModule,

@@ -3,7 +3,7 @@ import { MemberService } from '../../services/member.service';
 import { IMembersComponent, IMembersSearchKey, IMembersSearch, IMember } from './members.interface';
 import { IAccount, IRoleAccount } from '../../../shareds/services/account.service';
 import { AlertService } from '../../../shareds/services/alert.service';
-import { PageChangedEvent } from 'ngx-bootstrap';
+import { PageChangedEvent, BsLocaleService } from 'ngx-bootstrap';
 import { Router } from '@angular/router';
 import { AppURL } from '../../../app.url';
 import { AuthURL } from '../../authentication.url';
@@ -21,12 +21,16 @@ export class MemberComponent implements IMembersComponent {
     private member: MemberService,
     private alert: AlertService,
     private detect: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private localeService: BsLocaleService
   ) {
+    //เปลี่ยน Datepicker เป็น ภาษาไทย 
+    this.localeService.use('th');
     this.initailLoadMembers({
       startPage: this.startPage,
       limitPage: this.limitPage
     });
+
     //กำหนดค่าเริ่มต้น searchType
     this.searchType = this.searchTypeItems[0];
   }
@@ -61,7 +65,7 @@ export class MemberComponent implements IMembersComponent {
 
   //ค้นหาข้อมูล
   onSearchItem() {
-    this.startPage = 1;
+    /*this.startPage = 1;
     this.initailLoadMembers({
       searchText: this.searchText,
       searchType: this.searchType.key,
@@ -70,7 +74,8 @@ export class MemberComponent implements IMembersComponent {
     });
 
     //กระตุ้น Event
-    this.detect.detectChanges();
+    this.detect.detectChanges();*/
+    console.log(this.getsearchText);
   }
 
   //แสดงชื่อสิทธิ์ผู้ใช้งาน
@@ -123,6 +128,19 @@ export class MemberComponent implements IMembersComponent {
 
   //ตรวจสอบและรีเทินค่าค้นหา
   private get getsearchText() {
-    return this.searchType.key == 'role' ? IRoleAccount[this.searchText] || '' : this.searchText;
+    let responeSearchText = null;
+    switch (this.searchType.key) {
+      case 'role':
+        responeSearchText = IRoleAccount[this.searchText] || '';
+        break;
+      case 'updated':
+        responeSearchText = { from: this.searchText[0], to: this.searchText[1] };
+        break;
+      default:
+        responeSearchText = this.searchText;
+        break;
+    }
+    return responeSearchText;
   }
+
 }
