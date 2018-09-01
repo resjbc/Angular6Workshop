@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AccountService, IAccount, IRoleAccount } from "../../shareds/services/account.service";
 import { IMembersSearch, IMember } from "../components/members/members.interface";
+import { resolve, reject } from "q";
 
 @Injectable()
 export class MemberService {
@@ -72,7 +73,7 @@ export class MemberService {
 
     //เพิ่มข้อมูลสมาชิก
     createMember(model: IAccount) {
-        return new Promise((resolve, reject) => {
+        return new Promise<IAccount>((resolve, reject) => {
             if (this.account.mockUserItems.find(item => item.email == model.email))
                 return reject({ Message: 'อีเมล์นี้มีในระบบแล้ว' })
             model.id = Math.random();
@@ -80,6 +81,29 @@ export class MemberService {
             model.updated = new Date();
             this.account.mockUserItems.push(model);
             resolve(model);
+        });
+    }
+
+    //แก้ไขสมาชิก
+    updateMember(id: any, model: IAccount) {
+        return new Promise<IAccount>((resolve, reject) => {
+            const member = this.account.mockUserItems.find(item => item.id == id);
+            if (!member) return reject({Message: 'ไม่มีข้อมูลสมาชิกในะบบ'});
+
+            //ตรวจสอบว่ามีเมล์นี้ในะบบ
+            if(this.account.mockUserItems.find(item => {
+                return item.email == model.email && model.email != member.email;
+            })) return reject({Message: 'มีอีเมล์นี้อยู่ในระบบแล้ว'});
+
+            member.email =  model.email; 
+            member.password =  model.password || member.password; //หากไม่กรอก password ก็ใช้ตัวเดิม
+            member.firstname =  model.firstname; 
+            member.lastname =  model.lastname; 
+            member.position =  model.position; 
+            member.role =  model.role; 
+            member.image =  model.image; 
+            member.updated = new Date();
+            resolve(member);
         });
     }
 

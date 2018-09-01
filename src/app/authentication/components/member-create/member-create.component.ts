@@ -76,15 +76,30 @@ export class MemberCreateComponent implements IMemberCoponent {
   onSubmit() {
     if (this.form.invalid)
       return this.alert.someting_wrong();
-
-    this.member
-      .createMember(this.form.value)
+    //หากเป็นการเพิ่มสมาชิกใหม่
+    if (!this.memId) {
+      this.member
+        .createMember(this.form.value)
+        .then(res => {
+          this.alert.notify('บันทึกข้อมูลสำเร็จ', 'info');
+          this.router.navigate(['/', AppURL.Authen, AuthURL.Member]);
+        })
+        .catch(err => this.alert.notify(err.Message));
+      //console.log(this.form.value);
+    }
+    //หากเป็นการแก้ไขสมาชิก
+    else {
+      this.member
+      .updateMember(this.memId, this.form.value)
       .then(res => {
-        this.alert.notify('บันทึกข้อมูลสำเร็จ', 'info');
+        //console.log(res);
+        this.alert.notify('แก้ไขข้อมูลสำเร็จ','info');
         this.router.navigate(['/', AppURL.Authen, AuthURL.Member]);
+
       })
-      .catch(err => this.alert.notify(err.Message));
-    //console.log(this.form.value);
+      .catch(({ Message }) => this.alert.notify(Message));
+      //this.alert.notify('แก้ไข')
+    }
   }
 
   //แสดงตัวอย่างภาพอัพโหลด
@@ -110,14 +125,14 @@ export class MemberCreateComponent implements IMemberCoponent {
     this.member.getMemberById(this.memId)
       .then(member => {
         //นำข้อมูลมาใส่ฟอร์ม
-       const form = this.form;
-       form.controls['email'].setValue(member.email);
-       form.controls['password'].setValidators(this.validator.isPassword);
-       form.controls['firstname'].setValue(member.firstname);
-       form.controls['lastname'].setValue(member.lastname);
-       form.controls['position'].setValue(member.position);
-       form.controls['role'].setValue(member.role);
-       form.controls['image'].setValue(member.image);
+        const form = this.form;
+        form.controls['email'].setValue(member.email);
+        form.controls['password'].setValidators(this.validator.isPassword);
+        form.controls['firstname'].setValue(member.firstname);
+        form.controls['lastname'].setValue(member.lastname);
+        form.controls['position'].setValue(member.position);
+        form.controls['role'].setValue(member.role);
+        form.controls['image'].setValue(member.image);
 
 
       })
