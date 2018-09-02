@@ -13,8 +13,14 @@ import { IRoleAccount } from '../shareds/services/account.service';
 
 
 const RouteLists: Routes = [
-    { path: '', redirectTo: AuthURL.Dashboard, pathMatch: 'full' },
-    { path: AuthURL.Dashboard, component: DashboardComponent },
+    { path: '', redirectTo: AuthURL.Profile, pathMatch: 'full' },
+
+    {
+        path: AuthURL.Dashboard, component: DashboardComponent,
+        canActivate: [UserRoleGuard],
+        data: { roles: [IRoleAccount.Admin, IRoleAccount.Employee] }
+    },
+
     { path: AuthURL.Setting, component: SettingComponent },
     { path: AuthURL.Profile, component: ProfileComponent },
     { path: AuthURL.Element, component: BootstrapElementsComponent },

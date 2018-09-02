@@ -19,8 +19,20 @@ export class UserRoleGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const roles: IRoleAccount[] = next.data.roles;
-    console.log(roles);
-    return false;
+    return new Promise<boolean>((resolve, reject) => {
+      const roles: IRoleAccount[] = next.data.roles;
+      this.account
+        .getUserLogin(this.authen.getAuthenticated())
+        .then(userLogin => {
+          if (roles.filter(item => item == userLogin.role).length > 0)
+            resolve(true);
+          else
+            resolve(false);
+        })
+        .catch(() => resolve(false));
+    });
+
+
+
   }
 }
