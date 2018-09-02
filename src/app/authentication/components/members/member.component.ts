@@ -65,17 +65,18 @@ export class MemberComponent implements IMembersComponent {
 
   //ค้นหาข้อมูล
   onSearchItem() {
-    /*this.startPage = 1;
+    this.startPage = 1;
     this.initailLoadMembers({
-      searchText: this.searchText,
+      searchText: this.getsearchText,
       searchType: this.searchType.key,
       startPage: this.startPage,
       limitPage: this.limitPage
     });
 
     //กระตุ้น Event
-    this.detect.detectChanges();*/
-    console.log(this.getsearchText);
+    this.detect.detectChanges();
+    //console.log(this.searchType);
+    //console.log(this.searchText);
   }
 
   //แสดงชื่อสิทธิ์ผู้ใช้งาน
@@ -83,7 +84,7 @@ export class MemberComponent implements IMembersComponent {
     return IRoleAccount[role];
   }
 
-  //ดึงข้อมูลสมาชิก
+  // โหลดข้อมูลสมาชิก
   private initailLoadMembers(option?: IMembersSearch) {
     this.member
       .getMembers(option)
@@ -134,7 +135,14 @@ export class MemberComponent implements IMembersComponent {
         responeSearchText = IRoleAccount[this.searchText] || '';
         break;
       case 'updated':
-        responeSearchText = { from: this.searchText[0], to: this.searchText[1] };
+        const searchDate: { from: Date, to: Date } = { from: this.searchText[0], to: this.searchText[1] } as any;
+        searchDate.from.setHours(0);
+        searchDate.from.setMinutes(0);
+        searchDate.from.setSeconds(0);
+        searchDate.to.setHours(23);
+        searchDate.to.setMinutes(59);
+        searchDate.to.setSeconds(59);
+        responeSearchText = searchDate;
         break;
       default:
         responeSearchText = this.searchText;
