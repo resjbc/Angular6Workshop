@@ -3,6 +3,7 @@ import { IRegister } from '../../components/register/register.interface';
 import { ILogin } from '../../components/login/login.interface';
 import { IProfile } from '../../authentication/components/profile/profile.interface';
 import { IChangePassword } from '../../authentication/components/profile/change-password/change-password.interface';
+import { HttpService } from '../../authentication/services/http.service';
 
 
 
@@ -11,6 +12,10 @@ import { IChangePassword } from '../../authentication/components/profile/change-
     providedIn: 'root'
 })
 export class AccountService  {
+
+    constructor (private http: HttpService) {
+
+    }
 
     public mockUserItems: IAccount[] = [
         {

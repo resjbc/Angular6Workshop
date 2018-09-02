@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -17,7 +18,8 @@ import { SharedsModule } from './shareds/shareds.module';
   imports: [
     BrowserModule,
     AppRouting,
-    SharedsModule
+    SharedsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
