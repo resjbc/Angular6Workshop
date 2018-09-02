@@ -9,6 +9,7 @@ import { WidgetsComponent } from './components/widgets/widgets.component';
 import { MemberComponent } from './components/members/member.component';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { UserRoleGuard } from '../guards/user-role.guard';
+import { IRoleAccount } from '../shareds/services/account.service';
 
 
 const RouteLists: Routes = [
@@ -22,10 +23,13 @@ const RouteLists: Routes = [
 
     {
         path: AuthURL.Member, component: MemberComponent,
-        canActivate: [UserRoleGuard]
+        canActivate: [UserRoleGuard],
+        data: { roles: [IRoleAccount.Admin, IRoleAccount.Employee] },
     },
     {
-        path: AuthURL.MemberCreate, canActivate: [UserRoleGuard],
+        path: AuthURL.MemberCreate,
+        canActivate: [UserRoleGuard],
+        data: { roles: [IRoleAccount.Admin] },
         children: [
             { path: '', component: MemberCreateComponent },
             { path: ':id', component: MemberCreateComponent }
