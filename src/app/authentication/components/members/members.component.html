@@ -39,7 +39,8 @@
               </div>
 
               <div [ngSwitch]="searchType.key">
-                <input *ngSwitchCase="'updated'" bsDaterangepicker placement="left" [(ngModel)]="searchText" type="text" class="form-control" placeholder="ค้นหาข้อมูล">
+                <input *ngSwitchCase="'updated'" bsDaterangepicker placement="left" [(ngModel)]="searchText" type="text" class="form-control"
+                  placeholder="ค้นหาข้อมูล">
                 <input *ngSwitchDefault [(ngModel)]="searchText" type="text" class="form-control" placeholder="ค้นหาข้อมูล">
               </div>
 
@@ -76,8 +77,10 @@
                   <td>{{ getRoleName(item.role) }}</td>
                   <td>{{ item.updated | date : 'dd-MM-yyyy' }}</td>
                   <td class="text-right">
-                    <i (click)="onUpdateMember(item)" class="fa fa-edit cur"></i>
-                    <span> | </span>
+                    <ng-template [ngIf]="UserLogin.role == Role.Admin">
+                      <i *ngIf="UserLogin.role == Role.Admin" (click)="onUpdateMember(item)" class="fa fa-edit cur"></i>
+                      <span> | </span>
+                    </ng-template>
                     <i (click)="onDeleteMember(item)" class="fa fa-trash cur"></i>
                   </td>
                 </tr>

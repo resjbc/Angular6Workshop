@@ -1,12 +1,13 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { MemberService } from '../../services/member.service';
 import { IMembersComponent, IMembersSearchKey, IMembersSearch, IMember } from './members.interface';
-import { IAccount, IRoleAccount } from '../../../shareds/services/account.service';
+import { IAccount, IRoleAccount, AccountService } from '../../../shareds/services/account.service';
 import { AlertService } from '../../../shareds/services/alert.service';
 import { PageChangedEvent, BsLocaleService } from 'ngx-bootstrap';
 import { Router } from '@angular/router';
 import { AppURL } from '../../../app.url';
 import { AuthURL } from '../../authentication.url';
+import { AuthenService } from '../../../services/authen.service';
 
 @Component({
   selector: 'app-members',
@@ -22,7 +23,9 @@ export class MemberComponent implements IMembersComponent {
     private alert: AlertService,
     private detect: ChangeDetectorRef,
     private router: Router,
-    private localeService: BsLocaleService
+    private localeService: BsLocaleService,
+    private authen: AuthenService,
+    private account: AccountService,
   ) {
     //เปลี่ยน Datepicker เป็น ภาษาไทย 
     this.localeService.use('th');
@@ -33,6 +36,9 @@ export class MemberComponent implements IMembersComponent {
 
     //กำหนดค่าเริ่มต้น searchType
     this.searchType = this.searchTypeItems[0];
+
+    //โหลดข้อมูลผู้ใช้ที่ยัง Login
+    this.initialLoadUserLogin();
   }
 
   items: IMember;
@@ -49,9 +55,14 @@ export class MemberComponent implements IMembersComponent {
     { key: 'updated', value: 'ค้นหาจากวันที่' },
   ];
 
+  //ตรวจสอบผู้ใช้งาน
+  UserLogin: IAccount;
+  Role = IRoleAccount;
+
   //ส่วนของ pagination
   startPage: number = 1;
   limitPage: number = 5;
+
 
   //เปลี่ยนหน้า pagination
   onPageChanged(page: PageChangedEvent) {
@@ -149,6 +160,14 @@ export class MemberComponent implements IMembersComponent {
         break;
     }
     return responeSearchText;
+  }
+
+  //โหลดข้อมูลผู้ใช้ที่ยัง Login
+  private initialLoadUserLogin() {
+    this.account
+      .getUserLogin(this.authen.getAuthenticated())
+      .then(userLogin => this.UserLogin = userLogin)
+      .catch(err => this.alert.notify(err.Message));
   }
 
 }
