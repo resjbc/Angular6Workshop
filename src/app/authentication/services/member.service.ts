@@ -62,7 +62,7 @@ export class MemberService {
         const position = ['Frontend Developer', 'Backend Developer'];
         const role = [IRoleAccount.Member, IRoleAccount.Admin, IRoleAccount.Employee];
         //this.account.mockUserItems.splice(2);
-        for (let i = 3; i <= 200; i++) {
+        for (let i = 4; i <= 200; i++) {
             this.account.mockUserItems.push({
                 id: i.toString(),
                 firstname: `Firstname ${i}`,

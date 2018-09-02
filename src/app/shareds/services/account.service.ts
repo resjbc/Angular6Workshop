@@ -15,31 +15,45 @@ export class AccountService  {
     public mockUserItems: IAccount[] = [
         {
             id: 1,
-            firstname: "idres",
-            lastname: "dulyakul",
-            email: "idres@hotmail.com",
+            firstname: "Admin",
+            lastname: "Admin",
+            email: "admin@mail.com",
             password: "123456",
             position: "Frontend Developer",
-            image: "https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg",
-            role: IRoleAccount.Employee, 
+            image: null,
+            role: IRoleAccount.Admin, 
             created: new Date(),
             updated: new Date()
 
         },
         {
             id: 2,
-            firstname: "lid",
-            lastname: "dulyakul",
-            email: "lid@hotmail.com",
+            firstname: "Employee",
+            lastname: "Employee",
+            email: "employee@mail.com",
             password: "123456",
             position: "Backend Developer",
-            //image: "https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg",
-            role: IRoleAccount.Admin, 
+            image: null,
+            role: IRoleAccount.Employee, 
+            created: new Date(),
+            updated: new Date()
+
+        },
+        {
+            id: 3,
+            firstname: "Member",
+            lastname: "Member",
+            email: "member@mail.com",
+            password: "123456",
+            position: "Backend Developer",
+            image: null,
+            role: IRoleAccount.Member, 
             created: new Date(),
             updated: new Date()
 
         }
     ];
+ 
 
     //เปลี่ยนรหัสผ่านใหม่
     onChangePassword(accessToken: string , model: IChangePassword) {

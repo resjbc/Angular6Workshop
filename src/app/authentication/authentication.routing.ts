@@ -8,6 +8,7 @@ import { CardsComponent } from './components/cards/cards.component';
 import { WidgetsComponent } from './components/widgets/widgets.component';
 import { MemberComponent } from './components/members/member.component';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
+import { UserRoleGuard } from '../guards/user-role.guard';
 
 
 const RouteLists: Routes = [
@@ -18,9 +19,14 @@ const RouteLists: Routes = [
     { path: AuthURL.Element, component: BootstrapElementsComponent },
     { path: AuthURL.Card, component: CardsComponent },
     { path: AuthURL.Widget, component: WidgetsComponent },
-    { path: AuthURL.Member, component: MemberComponent },
+
     {
-        path: AuthURL.MemberCreate, children: [
+        path: AuthURL.Member, component: MemberComponent,
+        canActivate: [UserRoleGuard]
+    },
+    {
+        path: AuthURL.MemberCreate, canActivate: [UserRoleGuard],
+        children: [
             { path: '', component: MemberCreateComponent },
             { path: ':id', component: MemberCreateComponent }
         ]
