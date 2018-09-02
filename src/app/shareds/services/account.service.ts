@@ -91,11 +91,16 @@ export class AccountService  {
     onRegister(model: IRegister){
         //console.log(model)
         return new Promise((resolve , reject) => {
-            model['id'] = Math.random();
-            model['created'] = new Date();
-            //console.log(model);
-            this.mockUserItems.push(model)
-            resolve(model);
+            const _model: IAccount = model;
+            _model.id = Math.random();
+            _model.image = null;
+            _model.position ='';
+            _model.role = IRoleAccount.Member;
+            _model.created = new Date();
+            _model.updated = new Date();
+            console.log(model);
+            //this.mockUserItems.push(model)
+            //resolve(model);
             //reject({'Message' : 'Error from server!'});
         });
     }
