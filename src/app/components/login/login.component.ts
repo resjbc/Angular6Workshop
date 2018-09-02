@@ -3,7 +3,7 @@ import { AppURL } from '../../app.url';
 import { ILoginComponent } from './login.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../shareds/services/alert.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthURL } from '../../authentication/authentication.url';
 import { AccountService } from '../../shareds/services/account.service';
 import { AuthenService } from '../../services/authen.service';
@@ -20,13 +20,20 @@ export class LoginComponent implements ILoginComponent {
     private alert: AlertService,
     private router: Router,
     private account: AccountService,
-    private authen: AuthenService
+    private authen: AuthenService,
+    private activateRoute: ActivatedRoute
   ) { 
+    //เก็บค่า return URL เพื่อ redirect หลังจาก login
+    this.activateRoute.params.forEach(params => {
+      this.returnURL = params.returnURL || `/${AppURL.Authen}/${AuthURL.Dashboard}`;
+      //console.log(this.returnURL);
+    });
     this.initailCreateFromData()
    // console.log(this.authen.getAuthenticated());
   }
 
   Url = AppURL;
+  returnURL: string;
   form;
  
   //เข้าสู่ระบบ
@@ -41,7 +48,7 @@ export class LoginComponent implements ILoginComponent {
              this.authen.setAuthenticated(res.accessToken)
              // alert และ redirec หน้า
              this.alert.notify('เข้าสู่ระบบสำเร็จ','info');
-             this.router.navigate(['/', AppURL.Authen, AuthURL.Dashboard]);
+             this.router.navigateByUrl(this.returnURL);
           })
           .catch(err => this.alert.notify(err.Message));
     
