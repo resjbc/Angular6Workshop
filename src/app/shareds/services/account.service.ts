@@ -11,9 +11,9 @@ import { HttpService } from '../../authentication/services/http.service';
 @Injectable({
     providedIn: 'root'
 })
-export class AccountService  {
+export class AccountService {
 
-    constructor (private http: HttpService) {
+    constructor(private http: HttpService) {
 
     }
 
@@ -26,7 +26,7 @@ export class AccountService  {
             password: "123456",
             position: "Frontend Developer",
             image: null,
-            role: IRoleAccount.Admin, 
+            role: IRoleAccount.Admin,
             created: new Date(),
             updated: new Date()
 
@@ -39,7 +39,7 @@ export class AccountService  {
             password: "123456",
             position: "Backend Developer",
             image: null,
-            role: IRoleAccount.Employee, 
+            role: IRoleAccount.Employee,
             created: new Date(),
             updated: new Date()
 
@@ -52,23 +52,38 @@ export class AccountService  {
             password: "123456",
             position: "Backend Developer",
             image: null,
-            role: IRoleAccount.Member, 
+            role: IRoleAccount.Member,
             created: new Date(),
             updated: new Date()
 
         }
     ];
- 
+
+    // store user login ไว้
+    public UserLogin: IAccount = {} as any;
+    public setUserLogin(userLogin: IAccount) {
+        this.UserLogin.id = userLogin.id;
+        this.UserLogin.firstname = userLogin.firstname;
+        this.UserLogin.lastname = userLogin.lastname;
+        this.UserLogin.email = userLogin.email;
+        this.UserLogin.position = userLogin.position;
+        this.UserLogin.password = userLogin.password;
+        this.UserLogin.image = userLogin.image;
+        this.UserLogin.role = userLogin.role;
+        this.UserLogin.created = userLogin.created;
+        this.UserLogin.updated = userLogin.updated;
+        return this.UserLogin;
+    }
 
     //เปลี่ยนรหัสผ่านใหม่
-    onChangePassword(accessToken: string , model: IChangePassword) {
-        return new Promise(( resolve, reject ) => {
-            const userProfile = this.mockUserItems.find( item => item.id == accessToken);
-            if (!userProfile) return reject({ Message: 'ไม่มีผู้ใช้งานนี้ในระบบ'});
-            if (userProfile.password != model.old_pass) return reject({ Message: 'รหัสผ่านเดิมไม่ถูกต้อง'});
-        userProfile.password = model.new_pass;  
-        userProfile.updated = new Date(); 
-        resolve(userProfile);
+    onChangePassword(accessToken: string, model: IChangePassword) {
+        return new Promise((resolve, reject) => {
+            const userProfile = this.mockUserItems.find(item => item.id == accessToken);
+            if (!userProfile) return reject({ Message: 'ไม่มีผู้ใช้งานนี้ในระบบ' });
+            if (userProfile.password != model.old_pass) return reject({ Message: 'รหัสผ่านเดิมไม่ถูกต้อง' });
+            userProfile.password = model.new_pass;
+            userProfile.updated = new Date();
+            resolve(userProfile);
         });
     }
 
@@ -76,7 +91,7 @@ export class AccountService  {
     onUpdateProfile(accessToken: string, model: IProfile) {
         return new Promise((resolve, reject) => {
             const userProfile = this.mockUserItems.find(user => user.id == accessToken);
-            if (!userProfile) return reject({ Message: 'ไม่มีผู้ใช้งานนี้ในระบบ'});
+            if (!userProfile) return reject({ Message: 'ไม่มีผู้ใช้งานนี้ในระบบ' });
             userProfile.firstname = model.firstname;
             userProfile.lastname = model.lastname;
             userProfile.image = model.image;
@@ -88,46 +103,47 @@ export class AccountService  {
 
     //ดึงข้อมูลผู้ที่เข้าสู่ระบบจาก token
     getUserLogin(accessToken: string) {
-       return  this.http
-                .requestGet('api/member/data', accessToken)
-                .toPromise() as Promise<IAccount>;
-       /* return new Promise<IAccount>((resolve, reject) => {
-            const userLogin = this.mockUserItems.find(m => m.id == accessToken);
-            if(!userLogin) return reject({Message: 'accessToken ไม่ถูกต้อง'});
-            resolve(userLogin);
-        });*/
+        return (this.http
+            .requestGet('api/member/data', accessToken)
+            .toPromise() as Promise<IAccount>)
+            .then(userLogin => this.setUserLogin(userLogin));
+        /* return new Promise<IAccount>((resolve, reject) => {
+             const userLogin = this.mockUserItems.find(m => m.id == accessToken);
+             if(!userLogin) return reject({Message: 'accessToken ไม่ถูกต้อง'});
+             resolve(userLogin);
+         });*/
     }
 
     //เข้าสู่ระบบ
-    onLogin(model: ILogin){
-        return this.http.requestPost('api/account/login',model)
-        .toPromise() as Promise<{accessToken: string}>;
-       /* return new Promise<{ accessToken: string }>((resolve, reject) => {
-            const userLogin = this.mockUserItems.find(item => item.email == model.email && item.password == model.password);
-            if(!userLogin) return reject({Message: 'ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง'});
-            resolve({
-                accessToken: userLogin.id
-            });
-        });*/
+    onLogin(model: ILogin) {
+        return this.http.requestPost('api/account/login', model)
+            .toPromise() as Promise<{ accessToken: string }>;
+        /* return new Promise<{ accessToken: string }>((resolve, reject) => {
+             const userLogin = this.mockUserItems.find(item => item.email == model.email && item.password == model.password);
+             if(!userLogin) return reject({Message: 'ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง'});
+             resolve({
+                 accessToken: userLogin.id
+             });
+         });*/
     }
 
     //ลงทะเบียน
-    onRegister(model: IRegister){
-        return this.http.requestPost('api/account/register',model)
-                .toPromise() as Promise<IAccount>;
-       /* return new Promise((resolve , reject) => {
-            const _model: IAccount = model;
-            _model.id = Math.random();
-            _model.image = null;
-            _model.position ='';
-            _model.role = IRoleAccount.Member;
-            _model.created = new Date();
-            _model.updated = new Date();
-            //console.log(model);
-            this.mockUserItems.push(_model);
-            resolve(_model);
-            //reject({'Message' : 'Error from server!'});
-        });*/
+    onRegister(model: IRegister) {
+        return this.http.requestPost('api/account/register', model)
+            .toPromise() as Promise<IAccount>;
+        /* return new Promise((resolve , reject) => {
+             const _model: IAccount = model;
+             _model.id = Math.random();
+             _model.image = null;
+             _model.position ='';
+             _model.role = IRoleAccount.Member;
+             _model.created = new Date();
+             _model.updated = new Date();
+             //console.log(model);
+             this.mockUserItems.push(_model);
+             resolve(_model);
+             //reject({'Message' : 'Error from server!'});
+         });*/
     }
 }
 
@@ -145,7 +161,7 @@ export interface IAccount {
     updated?: Date
 }
 
-export enum IRoleAccount{
+export enum IRoleAccount {
     Member = 1,
     Employee,
     Admin

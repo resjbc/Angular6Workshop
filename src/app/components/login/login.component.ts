@@ -22,43 +22,43 @@ export class LoginComponent implements ILoginComponent {
     private account: AccountService,
     private authen: AuthenService,
     private activateRoute: ActivatedRoute
-  ) { 
+  ) {
     //เก็บค่า return URL เพื่อ redirect หลังจาก login
     this.activateRoute.params.forEach(params => {
       this.returnURL = params.returnURL || `/${AppURL.Authen}`;
       //console.log(this.returnURL);
     });
     this.initailCreateFromData()
-   // console.log(this.authen.getAuthenticated());
+    // console.log(this.authen.getAuthenticated());
   }
 
   Url = AppURL;
   returnURL: string;
   form;
- 
+
   //เข้าสู่ระบบ
   onSubmit(): void {
-      if(this.form.invalid)
-          return this.alert.someting_wrong();
-        this.account
-          .onLogin(this.form.value)
-          .then(res => {
-            //console.log(res);
-             //เก็บ session
-             this.authen.setAuthenticated(res.accessToken)
-             // alert และ redirec หน้า
-             this.alert.notify('เข้าสู่ระบบสำเร็จ','info');
-             this.router.navigateByUrl(this.returnURL);
-          })
-          .catch(err => this.alert.notify(err.Message));
-    
+    if (this.form.invalid)
+      return this.alert.someting_wrong();
+    this.account
+      .onLogin(this.form.value)
+      .then(res => {
+        //console.log(res);
+        //เก็บ session
+        this.authen.setAuthenticated(res.accessToken)
+        // alert และ redirec หน้า
+        this.alert.notify('เข้าสู่ระบบสำเร็จ', 'info');
+        this.router.navigateByUrl(this.returnURL);
+      })
+      .catch(err => this.alert.notify(err.Message));
+
   }
 
   // สร้าง ฟอร์ม
   private initailCreateFromData() {
     this.form = this.builder.group({
-      email: ['',Validators.required],
-      password: ['',Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
       remember: [true]
     });
   }
