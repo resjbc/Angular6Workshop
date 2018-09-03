@@ -88,11 +88,14 @@ export class AccountService  {
 
     //ดึงข้อมูลผู้ที่เข้าสู่ระบบจาก token
     getUserLogin(accessToken: string) {
-        return new Promise<IAccount>((resolve, reject) => {
+       return  this.http
+                .requestGet('api/member/data', accessToken)
+                .toPromise() as Promise<IAccount>;
+       /* return new Promise<IAccount>((resolve, reject) => {
             const userLogin = this.mockUserItems.find(m => m.id == accessToken);
             if(!userLogin) return reject({Message: 'accessToken ไม่ถูกต้อง'});
             resolve(userLogin);
-        });
+        });*/
     }
 
     //เข้าสู่ระบบ
