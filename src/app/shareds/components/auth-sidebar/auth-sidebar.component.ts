@@ -36,7 +36,7 @@ export class AuthSidebarComponent implements OnInit, IAuthSidebarComponent {
   //โหลดข้อมูล User ที่เข้าสู่ระบบ จาก token
   private initialLoadLogin() {
 
-    this.UserLogin = this.account.UserLogin;
+     this.UserLogin = this.account.UserLogin;
     if (this.UserLogin.id) return setTimeout(() => App.initialLoadPage(), 100);
 
     this.account
