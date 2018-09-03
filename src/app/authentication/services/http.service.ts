@@ -7,9 +7,13 @@ import { HttpClient } from "@angular/common/http";
 })
 export class HttpService {
     constructor(private http: HttpClient) {
-        this.http
-        .get('http://localhost:3000/example')
-        .subscribe(res => console.log(res));
+
     }
 
+    private address: string = 'http://localhost:3000/';
+
+    //ส่งข้อมูลแบบ Post method
+    requestPost(url: string, body: any) {
+        return this.http.post(`${this.address}${url}`,body);
+    }
 }

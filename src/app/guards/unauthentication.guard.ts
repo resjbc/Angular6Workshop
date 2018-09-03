@@ -16,7 +16,7 @@ export class UnauthenticationGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if (this.authen.getAuthenticated()) {
-      this.router.navigate(['/', AppURL.Authen, AuthURL.Dashboard]);
+      this.router.navigate(['/', AppURL.Authen, AuthURL.Element]);
       return false;
     }
 

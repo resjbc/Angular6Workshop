@@ -108,8 +108,9 @@ export class AccountService  {
 
     //ลงทะเบียน
     onRegister(model: IRegister){
-        //console.log(model)
-        return new Promise((resolve , reject) => {
+        return this.http.requestPost('api/account/register',model)
+                .toPromise() as Promise<IAccount>;
+       /* return new Promise((resolve , reject) => {
             const _model: IAccount = model;
             _model.id = Math.random();
             _model.image = null;
@@ -117,11 +118,11 @@ export class AccountService  {
             _model.role = IRoleAccount.Member;
             _model.created = new Date();
             _model.updated = new Date();
-            console.log(model);
-            //this.mockUserItems.push(model)
-            //resolve(model);
+            //console.log(model);
+            this.mockUserItems.push(_model);
+            resolve(_model);
             //reject({'Message' : 'Error from server!'});
-        });
+        });*/
     }
 }
 

@@ -6,7 +6,7 @@ import { IMembersSearch, IMember } from "../components/members/members.interface
 @Injectable()
 export class MemberService {
     constructor(private account: AccountService) {
-        if (account.mockUserItems.length <= 2)
+        if (account.mockUserItems.length <= 3)
             this.genaratedMember();
     }
 
