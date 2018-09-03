@@ -97,13 +97,15 @@ export class AccountService  {
 
     //เข้าสู่ระบบ
     onLogin(model: ILogin){
-        return new Promise<{ accessToken: string }>((resolve, reject) => {
+        return this.http.requestPost('api/account/login',model)
+        .toPromise() as Promise<{accessToken: string}>;
+       /* return new Promise<{ accessToken: string }>((resolve, reject) => {
             const userLogin = this.mockUserItems.find(item => item.email == model.email && item.password == model.password);
             if(!userLogin) return reject({Message: 'ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง'});
             resolve({
                 accessToken: userLogin.id
             });
-        });
+        });*/
     }
 
     //ลงทะเบียน
