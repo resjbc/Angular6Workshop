@@ -55,14 +55,17 @@ export class MemberService {
 
     // ดึงข้อมูลสมาชิกแค่คนเดียว
     getMemberById(id) {
-        return new Promise<IAccount>((resolve, reject) => {
+        return this.http
+                   .requestGet(`api/member/${id}`,this.authen.getAuthenticated())
+                   .toPromise() as Promise<IAccount>;
+        /*return new Promise<IAccount>((resolve, reject) => {
             //เรียงลำดับข้อมูลจากวันแก้ไขล่าสุด
             const member = this.account
                 .mockUserItems
                 .find(item => item.id == id);
             if (!member) return reject({ Message: 'ไม่มีข้อมูลสมาชิกในระบบ' });
             resolve(member);
-        });
+        });*/
     }
 
     //จำลองข้อมูลสมาชิกเพื่อทำ pagenation
@@ -88,7 +91,11 @@ export class MemberService {
 
     //เพิ่มข้อมูลสมาชิก
     createMember(model: IAccount) {
-        return new Promise<IAccount>((resolve, reject) => {
+        return this.http
+                   .requestPost('api/member', model , this.authen.getAuthenticated())
+                   .toPromise() as Promise<IAccount>;
+
+       /* return new Promise<IAccount>((resolve, reject) => {
             if (this.account.mockUserItems.find(item => item.email == model.email))
                 return reject({ Message: 'อีเมล์นี้มีในระบบแล้ว' })
             model.id = Math.random();
@@ -96,12 +103,15 @@ export class MemberService {
             model.updated = new Date();
             this.account.mockUserItems.push(model);
             resolve(model);
-        });
+        });*/
     }
 
     //แก้ไขสมาชิก
     updateMember(id: any, model: IAccount) {
-        return new Promise<IAccount>((resolve, reject) => {
+        return this.http
+                   .requestPut(`api/member/${id}`, model , this.authen.getAuthenticated())
+                   .toPromise() as Promise<IAccount>;
+        /*return new Promise<IAccount>((resolve, reject) => {
             const member = this.account.mockUserItems.find(item => item.id == id);
             if (!member) return reject({ Message: 'ไม่มีข้อมูลสมาชิกในะบบ' });
 
@@ -119,7 +129,7 @@ export class MemberService {
             member.image = model.image;
             member.updated = new Date();
             resolve(member);
-        });
+        });*/
     }
 
     //ลบข้อมูลสมาชิก

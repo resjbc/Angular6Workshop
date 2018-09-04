@@ -128,6 +128,7 @@ export class MemberCreateComponent implements IMemberCoponent {
         const form = this.form;
         form.controls['email'].setValue(member.email);
         form.controls['password'].setValidators(this.validator.isPassword);
+        form.controls['password'].updateValueAndValidity();
         form.controls['firstname'].setValue(member.firstname);
         form.controls['lastname'].setValue(member.lastname);
         form.controls['position'].setValue(member.position);

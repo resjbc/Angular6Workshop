@@ -17,7 +17,7 @@ export class AccountService {
 
     }
 
-    public mockUserItems: IAccount[] = [
+  /*  public mockUserItems: IAccount[] = [
         {
             id: 1,
             firstname: "Admin",
@@ -57,7 +57,7 @@ export class AccountService {
             updated: new Date()
 
         }
-    ];
+    ];*/
 
     // store user login ไว้
     public UserLogin: IAccount = {} as any;
