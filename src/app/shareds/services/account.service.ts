@@ -77,19 +77,26 @@ export class AccountService {
 
     //เปลี่ยนรหัสผ่านใหม่
     onChangePassword(accessToken: string, model: IChangePassword) {
-        return new Promise((resolve, reject) => {
+        return this.http
+                   .requestPost('api/member/change-password',model ,accessToken)
+                   .toPromise() as Promise<IAccount>;
+        /*return new Promise((resolve, reject) => {
             const userProfile = this.mockUserItems.find(item => item.id == accessToken);
             if (!userProfile) return reject({ Message: 'ไม่มีผู้ใช้งานนี้ในระบบ' });
             if (userProfile.password != model.old_pass) return reject({ Message: 'รหัสผ่านเดิมไม่ถูกต้อง' });
             userProfile.password = model.new_pass;
             userProfile.updated = new Date();
             resolve(userProfile);
-        });
+        });*/
     }
 
     //แก้ไขข้อมูลส่วนตัว Update Progile
     onUpdateProfile(accessToken: string, model: IProfile) {
-        return new Promise((resolve, reject) => {
+        return (this.http
+            .requestPost('api/member/profile', model, accessToken)
+            .toPromise() as Promise<IAccount>)
+            .then(user => this.setUserLogin(user));
+        /*return new Promise((resolve, reject) => {
             const userProfile = this.mockUserItems.find(user => user.id == accessToken);
             if (!userProfile) return reject({ Message: 'ไม่มีผู้ใช้งานนี้ในระบบ' });
             userProfile.firstname = model.firstname;
@@ -98,7 +105,7 @@ export class AccountService {
             userProfile.position = model.position;
             userProfile.updated = new Date();
             resolve(userProfile);
-        });
+        });*/
     }
 
     //ดึงข้อมูลผู้ที่เข้าสู่ระบบจาก token
