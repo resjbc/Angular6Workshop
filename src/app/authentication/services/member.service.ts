@@ -1,18 +1,26 @@
 import { Injectable } from "@angular/core";
 import { AccountService, IAccount, IRoleAccount } from "../../shareds/services/account.service";
 import { IMembersSearch, IMember } from "../components/members/members.interface";
-
+import { HttpService } from "./http.service";
+import { AuthenService } from "../../services/authen.service";
+declare let $;
 
 @Injectable()
 export class MemberService {
-    constructor(private account: AccountService) {
-        if (account.mockUserItems.length <= 3)
-            this.genaratedMember();
+    constructor(
+        private account: AccountService,
+        private http: HttpService,
+        private authen: AuthenService) {
+       /* if (account.mockUserItems.length <= 3)
+            this.genaratedMember();*/
     }
 
     // ดึงข้อมูลสมาชิกทั้งหมด
     getMembers(option?: IMembersSearch) {
-        return new Promise<IMember>((resolve, reject) => {
+        return this.http
+                   .requestGet(`api/member?${$.param(option)}`, this.authen.getAuthenticated())
+                   .toPromise() as Promise<IMember>
+        /*return new Promise<IMember>((resolve, reject) => {
             //เรียงลำดับข้อมูลจากวันแก้ไขล่าสุด
             let items = this.account.mockUserItems.sort((a1, a2) => {
                 return Date.parse(a2.updated.toString()) - Date.parse(a1.updated.toString())
@@ -42,7 +50,7 @@ export class MemberService {
                     startItem, endItem
                 ), totalItems: items.length
             });
-        });
+        });*/
     }
 
     // ดึงข้อมูลสมาชิกแค่คนเดียว
@@ -58,7 +66,7 @@ export class MemberService {
     }
 
     //จำลองข้อมูลสมาชิกเพื่อทำ pagenation
-    private genaratedMember() {
+    /*private genaratedMember() {
         const position = ['Frontend Developer', 'Backend Developer'];
         const role = [IRoleAccount.Member, IRoleAccount.Admin, IRoleAccount.Employee];
         //this.account.mockUserItems.splice(2);
@@ -76,7 +84,7 @@ export class MemberService {
             });
 
         }
-    }
+    }*/
 
     //เพิ่มข้อมูลสมาชิก
     createMember(model: IAccount) {
@@ -116,11 +124,14 @@ export class MemberService {
 
     //ลบข้อมูลสมาชิก
     deleteMember(id: any) {
-        return new Promise((reslove, reject) => {
+        return this.http
+                   .requestDelete(`api/member/${id}`,this.authen.getAuthenticated())
+                   .toPromise() as Promise<number>;
+        /*return new Promise((reslove, reject) => {
             const findIndex = this.account.mockUserItems.findIndex(item => item.id == id);
             if (findIndex < 0) return reject({ Message: 'ไม่มีข้อมูลนี้ในระบบ' });
             reslove(this.account.mockUserItems.splice(findIndex, 1));
-        });
+        });*/
     }
 
 }

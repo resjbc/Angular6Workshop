@@ -32,6 +32,15 @@ export class HttpService {
             .pipe(catchError(err => this.handleError(err)));
     }
 
+     //ส่งข้อมูลแบบ Delete method
+     requestDelete(url: string, accessToken?: string) {
+        return this.http
+            .delete(`${this.address}${url}`, {
+                headers: this.appendHeaders(accessToken)
+            })
+            .pipe(catchError(err => this.handleError(err)));
+    }
+
     // ปรับแต่ง Error ใหม่
     private handleError(errResponse: HttpErrorResponse): Observable<any> {
         errResponse['Message'] = errResponse.message;
