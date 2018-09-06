@@ -37,7 +37,7 @@ export class MemberCreateComponent implements IMemberCoponent {
       this.memId = params.id;
     });
 
-    this.initailFormData();
+    this.initailCreateFormData();
     this.initailUpdateFormData();
     //เพิ่ม position
     this.positionItem = shareds.positionItem;
@@ -60,15 +60,16 @@ export class MemberCreateComponent implements IMemberCoponent {
   }
 
   //สร้าง form
-  private initailFormData() {
+  private initailCreateFormData() {
     this.form = this.builder.group({
+      image: [],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.validator.isPassword]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       position: ['', Validators.required],
-      role: ['', Validators.required],
-      image: []
+      role: ['', Validators.required]
+      
     });
   }
 
@@ -81,6 +82,7 @@ export class MemberCreateComponent implements IMemberCoponent {
       this.member
         .createMember(this.form.value)
         .then(res => {
+          console.log(res);
           this.alert.notify('บันทึกข้อมูลสำเร็จ', 'info');
           this.router.navigate(['/', AppURL.Authen, AuthURL.Member]);
         })
