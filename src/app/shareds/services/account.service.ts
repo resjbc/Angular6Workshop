@@ -171,7 +171,7 @@ export interface IAccount {
 export enum IRoleAccount {
     Member = 1,
     Employee,
-    Admin
+    Admin 
 }
 
 
