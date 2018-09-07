@@ -92,6 +92,7 @@ export class AccountService {
 
     //แก้ไขข้อมูลส่วนตัว Update Progile
     onUpdateProfile(accessToken: string, model: IProfile) {
+        if(!model.image) model.image = this.UserLogin.image;
         return (this.http
             .requestPost('api/member/profile', model, accessToken)
             .toPromise() as Promise<IAccount>)
