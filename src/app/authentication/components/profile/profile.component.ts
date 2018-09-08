@@ -21,16 +21,17 @@ export class ProfileComponent implements IProfileComponent {
     private accout: AccountService,
     private alert: AlertService,
     private modalService: BsModalService,
-    private shareds: SharedsService
-
+    private shareds: SharedsService,
   ) {
     this.initialCreateFormData();
     this.initialLoadUpdateFormData();
     this.positionItem = this.shareds.positionItem;
+    
   }
 
   form: FormGroup;
   modalRef: BsModalRef;
+  public image: string
 
   positionItem: any[] = [];
 
@@ -50,10 +51,12 @@ export class ProfileComponent implements IProfileComponent {
     
     this.shareds
         .onConvertImage(input)
-        .then(base64 => imageControl.setValue(base64))
+        .then(base64 => {
+          (!base64)? imageControl.setValue(this.image):imageControl.setValue(base64)
+        })
         .catch(err => {
           input.value = null;
-          imageControl.setValue(null);
+          imageControl.setValue(this.image);
           this.alert.notify(err.Message);
         });
   }
@@ -88,6 +91,7 @@ export class ProfileComponent implements IProfileComponent {
         this.form.controls['lastname'].setValue(user.lastname);
         this.form.controls['position'].setValue(user.position);
         this.form.controls['image'].setValue(user.image);
+        this.image = user.image;
       })
       .catch(err => this.alert.notify(err.Message));
   }
